@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>従業員ダッシュボード</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #eef5ff, #f8fbff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      width: 900px;
+      background: #fff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .logout-btn {
+      padding: 8px 16px;
+      border: 1px solid #ff5a5a;
+      border-radius: 20px;
+      background: #fff;
+      color: #ff5a5a;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .logout-btn:hover {
+      background: #ff5a5a;
+      color: #fff;
+    }
+
+    .description {
+      color: #666;
+      margin-bottom: 24px;
+      font-size: 14px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .card {
+      border: 1px solid #e6eaf0;
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: box-shadow 0.2s;
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    .card h2 {
+      margin: 0 0 6px 0;
+      font-size: 16px;
+    }
+
+    .card p {
+      margin: 0;
+      font-size: 13px;
+      color: #666;
+    }
+
+    .card a {
+      color: #3b82f6;
+      font-size: 14px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .card a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 12px;
+      color: #999;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        width: 95%;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>従業員ダッシュボード</h1>
+      <a href="#" class="logout-btn" onclick="confirmLogout()">ログアウト</a>
+    </div>
+
+    <p class="description">
+      よく使う操作へのショートカットです。
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <div>
+          <h2>パスワード変更</h2>
+          <p>セキュリティのため、定期的な変更がおすすめです。</p>
+        </div>
+        <a href="/password/change">開く →</a>
+      </div>
+
+      <div class="card">
+        <div>
+          <h2>勤怠入力</h2>
+          <p>出勤・退勤などの入力ページへ移動します。</p>
+        </div>
+        <a href="/attendance/input">開く →</a>
+      </div>
+
+      <div class="card">
+        <div>
+          <h2>勤怠一覧</h2>
+          <p>自分の勤怠履歴を確認します。</p>
+        </div>
+        <a href="/attendance/list">開く →</a>
+      </div>
+
+      <div class="card">
+        <div>
+          <h2>プロフィール</h2>
+          <p>表示名などの基本情報を確認・編集します。</p>
+        </div>
+        <a href="/profile">開く →</a>
+      </div>
+    </div>
+
+    <footer>
+      © Attendance Management
+    </footer>
+  </div>
+
+  <script>
+    function confirmLogout() {
+      const ok = confirm("ログアウトしますか？");
+      if (ok) {
+        window.location.href = "/logout";
+      }
+    }
+  </script>
+</body>
+</html>
