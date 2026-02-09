@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>時給マスタ設定</title>
+</head>
+<body>
+
+<h2>時給マスタ設定（管理者）</h2>
+
+<hr>
+
+<h3>職務給 追加</h3>
+<form th:action="@{/admin/salary/job/create}" method="post">
+    <label>名称：</label>
+    <input type="text" name="name" required>
+    <label>時給：</label>
+    <input type="number" name="salary" required>
+    <button type="submit">追加</button>
+</form>
+
+<hr>
+
+<h3>職能給 追加</h3>
+<form th:action="@{/admin/salary/skill/create}" method="post">
+    <label>名称：</label>
+    <input type="text" name="name" required>
+    <label>加算額：</label>
+    <input type="number" name="salary" required>
+    <button type="submit">追加</button>
+</form>
+
+</body>
+</html>

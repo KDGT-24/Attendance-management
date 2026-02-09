@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>社員別 時給設定</title>
+</head>
+<body>
+
+<h2>社員別 時給設定（管理者）</h2>
+
+<form th:action="@{/admin/user/salary/update}" method="post">
+
+    <label>社員番号：</label>
+    <input type="text" name="employeeNumber" required>
+    <br><br>
+
+    <label>職務（単一）：</label>
+    <select name="jobId">
+        <option value="">未選択</option>
+        <option th:each="job : ${jobs}"
+                th:value="${job.id}"
+                th:text="${job.name}">
+        </option>
+    </select>
+
+    <br><br>
+
+    <label>職能（複数）：</label><br>
+    <div th:each="skill : ${skills}">
+        <input type="checkbox"
+               name="skillIds"
+               th:value="${skill.id}">
+        <span th:text="${skill.name}"></span>
+    </div>
+
+    <br>
+    <button type="submit">保存</button>
+</form>
+
+</body>
+</html>
