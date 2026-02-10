@@ -1,18 +1,20 @@
-package com.example.Attendance_management_app.service;
+package com.example.attendance_management_app.service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.Optional;
 
-import jakarta.transaction.Transactional;
-
 import org.springframework.stereotype.Service;
 
-import com.example.Attendance_management_app.entity.Attendance;
-import com.example.Attendance_management_app.entity.User;
-import com.example.Attendance_management_app.repository.AttendanceRepository;
-import com.example.Attendance_management_app.repository.UserRepository;
+import com.example.attendance_management_app.entity.Attendance;
+import com.example.attendance_management_app.entity.PunchType;
+import com.example.attendance_management_app.entity.User;
+import com.example.attendance_management_app.repository.AttendanceRepository;
+import com.example.attendance_management_app.repository.UserRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
@@ -32,14 +34,15 @@ public class AttendanceService {
     // -------------------------
     // 打刻
     // -------------------------
-    public void punch(User user, String type) {
+    @Transactional
+    public void punch(User user, PunchType type) {
 
         LocalDate today = LocalDate.now();
         LocalDateTime start = today.atStartOfDay();
         LocalDateTime end   = today.plusDays(1).atStartOfDay();
 
         Attendance attendance = attendanceRepository
-                .findByUserAndCheckInTimeBetween(user, start, end)
+                .findFirstByUserAndCheckInTimeBetween(user, start, end)
                 .orElseGet(() -> {
                     Attendance a = new Attendance();
                     a.setUser(user);
@@ -48,16 +51,35 @@ public class AttendanceService {
 
         LocalDateTime now = LocalDateTime.now();
 
-        switch (type.toUpperCase()) {
-            case "CHECKIN"    -> attendance.setCheckInTime(now);
-            case "CHECKOUT"   -> attendance.setCheckOutTime(now);
-            case "BREAKSTART" -> attendance.setBreakStartTime(now);
-            case "BREAKEND"   -> attendance.setBreakEndTime(now);
-            default -> throw new IllegalArgumentException("Unknown punch type: " + type);
+        switch (type) {
+            case CHECKIN -> {
+                if (attendance.getCheckInTime() == null) {
+                    attendance.setCheckInTime(now);
+                }
+            }
+            case BREAK_START -> {
+                if (attendance.getCheckInTime() != null
+                        && attendance.getBreakStartTime() == null) {
+                    attendance.setBreakStartTime(now);
+                }
+            }
+            case BREAK_END -> {
+                if (attendance.getBreakStartTime() != null
+                        && attendance.getBreakEndTime() == null) {
+                    attendance.setBreakEndTime(now);
+                }
+            }
+            case CHECKOUT -> {
+                if (attendance.getCheckInTime() != null
+                        && attendance.getCheckOutTime() == null) {
+                    attendance.setCheckOutTime(now);
+                }
+            }
         }
 
         attendanceRepository.save(attendance);
     }
+
 
     // -------------------------
     // 取得系
@@ -90,9 +112,19 @@ public class AttendanceService {
         LocalDateTime to   = end.plusDays(1).atStartOfDay();
 
         return attendanceRepository
-                .findByUserAndCheckInTimeBetween(user, from, to)
-                .stream()
-                .toList();
+                .findAllByUserAndCheckInTimeBetween(user, from, to);
+    }
+
+    public List<Attendance> getUserAttendanceByMonth(
+        User user,
+        YearMonth yearMonth
+    ) {
+        LocalDateTime from = yearMonth.atDay(1).atStartOfDay();
+        LocalDateTime to   = yearMonth.plusMonths(1).atDay(1).atStartOfDay();
+
+        return attendanceRepository.findAllByUserAndCheckInTimeBetween(
+            user, from, to
+        );
     }
 
     public List<String> detectAnomalies() {

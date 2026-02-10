@@ -1,4 +1,4 @@
-package com.example.Attendance_management_app.entity;
+package com.example.attendance_management_app.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,7 +13,7 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 
 	@Column(nullable = false)
 	private String name;
@@ -27,11 +27,31 @@ public class User {
 	@Column(unique = true)
 	private String email;
 
-	public Integer getId() {
+	/*
+	 * =========================
+	 * 給与計算用（既存カラム前提）
+	 * =========================
+	 * ※ DB側で
+	 *   jobs    : int[] / json / csv 等として
+	 *   skills  : int[] / json / csv 等
+	 * が既に存在している前提
+	 */
+
+	@Column(name = "jobs")
+	private Integer[] jobs;
+
+	@Column(name = "skills")
+	private Integer[] skills;
+
+	// --------------------
+	// getter / setter
+	// --------------------
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -65,5 +85,23 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	// ---- 給与用 ----
+
+	public Integer[] getJobs() {
+		return jobs;
+	}
+
+	public void setJobs(Integer[] jobs) {
+		this.jobs = jobs;
+	}
+
+	public Integer[] getSkills() {
+		return skills;
+	}
+
+	public void setSkills(Integer[] skills) {
+		this.skills = skills;
 	}
 }

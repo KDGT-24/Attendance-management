@@ -1,12 +1,12 @@
-package com.example.Attendance_management_app.service;
+package com.example.attendance_management_app.service;
 
 import java.util.Optional;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.Attendance_management_app.entity.User;
-import com.example.Attendance_management_app.repository.UserRepository;
+import com.example.attendance_management_app.entity.User;
+import com.example.attendance_management_app.repository.UserRepository;
 
 @Service
 public class UserService {

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/css/common.css}">
+<body>
+
+<header style="padding:10px; border-bottom:1px solid #ccc;">
+    <nav>
+        <!-- 従業員ダッシュボード -->
+        <a th:href="@{/employee/dashboard}">従業員ダッシュボード</a>
+
+        <!-- 管理者のみ表示 -->
+        <span th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+            | <a th:href="@{/admin/dashboard}">管理者ダッシュボード</a>
+        </span>
+
+        | <a th:href="@{/logout}">ログアウト</a>
+    </nav>
+</header>
+
+</body>
+</html>

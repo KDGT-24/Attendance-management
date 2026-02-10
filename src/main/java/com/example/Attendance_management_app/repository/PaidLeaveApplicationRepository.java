@@ -1,6 +1,15 @@
-package com.example.Attendance_management_app.repository;
-public interface PaidLeaveApplicationRepository
-        extends JpaRepository<PaidLeaveApplication, Long> {
+package com.example.attendance_management_app.repository;
 
-    List<PaidLeaveApplication> findByEmployee(Employee employee);
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.example.attendance_management_app.entity.PaidLeaveApplication;
+import com.example.attendance_management_app.entity.User;
+
+public interface PaidLeaveApplicationRepository
+	extends JpaRepository<PaidLeaveApplication, Long> {
+		List<PaidLeaveApplication> findByApplicantOrderByAppliedAtDesc(User applicant);
+
+		List<PaidLeaveApplication> findAllByOrderByAppliedAtDesc();
 }

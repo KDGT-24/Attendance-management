@@ -1,8 +1,11 @@
-package com.example.Attendance_management_app.entity;
+package com.example.attendance_management_app.entity;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,15 +27,22 @@ public class FixRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private User user;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Attendance attendance;
 
-    private int eventType;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private FixEventType eventType;
+
     private LocalDateTime newTime;
     private String reason;
-    private int status;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private FixRequestStatus status = FixRequestStatus.PENDING;
 }
+
 

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>有給申請</title></head>
+<body>
+<div th:replace="fragments/header :: body"></div>
+
+<h1>有給申請</h1>
+
+<form th:action="@{/employee/paid-leave/apply}"
+      th:object="${application}"
+      method="post">
+
+    <label>開始日</label>
+    <input type="date" th:field="*{startDate}">
+
+    <label>終了日</label>
+    <input type="date" th:field="*{endDate}">
+
+    <label>理由</label>
+    <textarea th:field="*{reason}"></textarea>
+
+    <button type="submit">申請</button>
+</form>
+
+</body>
+</html>

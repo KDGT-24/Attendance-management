@@ -1,12 +1,12 @@
-package com.example.Attendance_management_app.service;
+package com.example.attendance_management_app.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.Attendance_management_app.entity.SkillSalary;
-import com.example.Attendance_management_app.repository.SkillSalaryRepository;
+import com.example.attendance_management_app.entity.SkillSalary;
+import com.example.attendance_management_app.repository.SkillSalaryRepository;
 
 import lombok.RequiredArgsConstructor;
 

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>修正申請一覧</title></head>
+<body>
+<div th:replace="fragments/header :: body"></div>
+
+<h1>修正申請一覧</h1>
+
+<table border="1">
+<thead>
+<tr>
+    <th>ID</th>
+    <th>申請者</th>
+    <th>理由</th>
+    <th>状態</th>
+    <th>操作</th>
+</tr>
+</thead>
+
+<tbody>
+<tr th:each="r : ${fixRequests}">
+    <td th:text="${r.id}"></td>
+    <td th:text="${r.user.name}"></td>
+    <td th:text="${r.reason}"></td>
+
+    <td th:text="${r.status.label}"></td>
+
+    <td th:if="${r.status == T(com.example.attendance_management_app.entity.FixRequestStatus).PENDING}">
+        <form th:action="@{/admin/fix-requests/{id}/approve(id=${r.id})}"
+              method="post" style="display:inline">
+            <button>承認</button>
+        </form>
+
+        <form th:action="@{/admin/fix-requests/{id}/reject(id=${r.id})}"
+              method="post" style="display:inline">
+            <button>却下</button>
+        </form>
+    </td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

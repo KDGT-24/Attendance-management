@@ -1,16 +1,13 @@
-package com.example.Attendance_management_app.service;
+package com.example.attendance_management_app.service;
 
-import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.Attendance_management_app.dto.MonthlySalaryResult;
-import com.example.Attendance_management_app.dto.SalaryResult;
-import com.example.Attendance_management_app.entity.Attendance;
-import com.example.Attendance_management_app.entity.User;
-import com.example.Attendance_management_app.repository.AttendanceRepository;
+import com.example.attendance_management_app.dto.MonthlySalaryResult;
+import com.example.attendance_management_app.entity.Attendance;
+import com.example.attendance_management_app.entity.User;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,41 +15,34 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MonthlySalaryService {
 
-    private final AttendanceRepository attendanceRepository;
-    private final SalaryCalculationService salaryCalculationService;
+    private final AttendanceService attendanceService;
+    private final SalaryCalculationService calculationService;
 
-    public MonthlySalaryResult calculateMonthly(User user, YearMonth yearMonth) {
+    /**
+     * 月次給与計算
+     */
+    public MonthlySalaryResult calculate(
+            User user,
+            YearMonth yearMonth
+    ) {
+        // 月内の勤怠を取得
+        List<Attendance> records =
+                attendanceService.getUserAttendanceByMonth(user, yearMonth);
 
-        LocalDateTime from = yearMonth.atDay(1).atStartOfDay();
-        LocalDateTime to   = yearMonth.atEndOfMonth().atTime(23, 59, 59);
+        // 総労働時間
+        int totalMinutes =
+                calculationService.calculateWorkingMinutes(records);
 
-        List<Attendance> attendances =
-                attendanceRepository.findByUserOrderByCheckInTimeAsc(user);
-
-        int totalMinutes = 0;
-        int nightMinutes = 0;
-        int overtimeMinutes = 0;
-        int totalSalary = 0;
-
-        for (Attendance a : attendances) {
-            if (a.getCheckOut() == null) {
-                continue;
-            }
-
-            SalaryResult r = salaryCalculationService.calculate(a, user);
-
-            totalMinutes    += r.getTotalMinutes();
-            nightMinutes    += r.getNightMinutes();
-            overtimeMinutes += r.getOvertimeMinutes();
-            totalSalary     += r.getTotalSalary();
-        }
+        // 給与計算
+        int salary =
+                calculationService.calculateMonthlySalary(user, records);
 
         return new MonthlySalaryResult(
                 yearMonth,
                 totalMinutes,
-                nightMinutes,
-                overtimeMinutes,
-                totalSalary
+                0, // nightMinutes（後で拡張）
+                0, // overtimeMinutes（後で拡張）
+                salary
         );
     }
 }

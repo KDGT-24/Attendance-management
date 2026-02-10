@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:replace="fragments/header :: body"></div>
+
+<h1>User編集</h1>
+
+<p>ユーザー名：<span th:text="${user.name}"></span></p>
+
+<form method="post">
+
+<h3>職務給</h3>
+<div th:each="j : ${jobSalaries}">
+    <label>
+        <input type="checkbox"
+               name="jobs"
+               th:value="${j.id}"
+               th:checked="${user.jobs != null and #arrays.contains(user.jobs, j.id.intValue())}">
+        <span th:text="${j.name}"></span>
+        （<span th:text="${j.jobSalary}"></span>）
+    </label>
+</div>
+
+<h3>職能給</h3>
+<div th:each="s : ${skillSalaries}">
+    <label>
+        <input type="checkbox"
+               name="skills"
+               th:value="${s.id}"
+               th:checked="${user.skills != null and #arrays.contains(user.skills, s.id.intValue())}">
+        <span th:text="${s.name}"></span>
+        （<span th:text="${s.skillSalary}"></span>）
+    </label>
+</div>
+
+<button>更新</button>
+</form>
+
+<a href="/admin/users">戻る</a>
+
+</body>
+</html>

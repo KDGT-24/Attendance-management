@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>管理者ダッシュボード</title></head>
+<body>
+<div th:replace="fragments/header :: body"></div>
+
+<h1>管理者ダッシュボード</h1>
+<p>ログインユーザー：<span th:text="${user.name}"></span></p>
+
+<nav>
+    <a th:href="@{/admin/fix-requests}">修正申請一覧</a> |
+    <a th:href="@{/admin/alerts}">異常検知</a> |
+    <a th:href="@{/admin/paid-leave/list}">有給申請</a> |
+    <a th:href="@{/admin/salary/jobs}">職務給マスタ</a> |
+    <a th:href="@{/admin/salary/skills}">職能給マスタ</a> |
+    <a th:href="@{/admin/users}">ユーザー管理</a> |
+    <a th:href="@{/admin/salary}">月次給与一覧</a>
+</nav>
+
+<h2>全勤怠データ</h2>
+<table border="1">
+<tr>
+    <th>ID</th><th>ユーザー</th><th>出勤</th><th>退勤</th>
+</tr>
+<tr th:each="a : ${allAttendanceRecords}">
+    <td th:text="${a.id}"></td>
+    <td th:text="${a.user.name}"></td>
+    <td th:text="${a.checkInTime}"></td>
+    <td th:text="${a.checkOutTime}"></td>
+</tr>
+</table>
+
+</body>
+</html>

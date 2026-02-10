@@ -1,4 +1,4 @@
-package com.example.Attendance_management_app.config;
+package com.example.attendance_management_app.config;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.example.Attendance_management_app.repository.UserRepository;
+import com.example.attendance_management_app.repository.UserRepository;
 
 @Configuration
 public class SecurityConfig {
@@ -24,19 +24,21 @@ public class SecurityConfig {
 
 	@Bean
 	UserDetailsService userDetailsService(UserRepository userRepository) {
-		return username -> {
+    return username -> {
 			var u = userRepository.findByName(username)
-					.orElseThrow(() -> new RuntimeException("User not found: " + username));
+							.orElseThrow(() -> new RuntimeException("User not found: " + username));
 
-			GrantedAuthority auth = new SimpleGrantedAuthority("ROLE_" + u.getRole()); // roleは "ADMIN" / "EMPLOYEE" 想定
+			GrantedAuthority auth =
+							new SimpleGrantedAuthority(u.getRole());
 
 			return org.springframework.security.core.userdetails.User.builder()
-					.username(u.getName())
-					.password(u.getPassword())
-					.authorities(List.of(auth))
-					.build();
-		};
-	}
+							.username(u.getName())
+							.password(u.getPassword())
+							.authorities(List.of(auth))
+							.build();
+    };
+}
+
 
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

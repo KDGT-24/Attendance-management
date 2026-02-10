@@ -1,4 +1,4 @@
-package com.example.Attendance_management_app.form;
+package com.example.attendance_management_app.form;
 
 public class PasswordChangeForm {
 

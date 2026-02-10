@@ -1,12 +1,13 @@
-package com.example.Attendance_management_app.repository;
+package com.example.attendance_management_app.repository;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.Attendance_management_app.entity.FixRequest;
-import com.example.Attendance_management_app.entity.User;
+import com.example.attendance_management_app.entity.FixRequest;
+import com.example.attendance_management_app.entity.FixRequestStatus;
+import com.example.attendance_management_app.entity.User;
 
 @Repository
 // このインタフェースがリポジトリ層のコンポーネントであることを示すアノテーション。
@@ -17,7 +18,7 @@ public interface FixRequestRepository extends JpaRepository<FixRequest, Long> {
 // 第 1 引数はエンティティの型、第 2 引数は主キーの型。
 List<FixRequest> findByUser(User user);
 // 指定した User に紐づく修正依頼を全て取得するメソッド。
-List<FixRequest> findByStatus(Integer status);
+List<FixRequest> findByStatus(FixRequestStatus status);
 // 指定したステータスの修正依頼を全て取得するメソッド。
 // 例: pending, approved, rejected など。
 }

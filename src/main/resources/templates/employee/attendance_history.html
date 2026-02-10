@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>勤怠履歴</title></head>
+<body>
+<div th:replace="fragments/header :: body"></div>
+
+<h1>勤怠履歴</h1>
+
+<table border="1">
+<tr>
+    <th>日付</th><th>出勤</th><th>退勤</th><th>修正</th>
+</tr>
+<tr th:each="a : ${attendanceRecords}">
+    <td th:text="${#temporals.format(a.checkInTime,'yyyy-MM-dd')}"></td>
+    <td th:text="${a.checkInTime}"></td>
+    <td th:text="${a.checkOutTime}"></td>
+    <td>
+        <a th:href="@{/employee/attendance/history/{id}/request-fix(id=${a.id})}">修正申請</a>
+    </td>
+</tr>
+</table>
+
+</body>
+</html>

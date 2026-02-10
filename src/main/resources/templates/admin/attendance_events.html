@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>勤怠詳細</title></head>
+<body>
+<div th:replace="fragments/header :: body"></div>
+
+<h1>勤怠</h1>
+
+<form method="get" th:action="@{/admin/attendance}">
+    <input type="hidden" name="userId" th:value="${param.userId}">
+    開始日 <input type="date" name="startDate" th:value="${startDate}">
+    終了日 <input type="date" name="endDate" th:value="${endDate}">
+    <button>検索</button>
+</form>
+
+<table border="1">
+<tr>
+    <th>日付</th><th>出勤</th><th>退勤</th>
+</tr>
+<tr th:each="e : ${events}">
+    <td th:text="${#temporals.format(e.checkInTime,'yyyy-MM-dd')}"></td>
+    <td th:text="${e.checkInTime}"></td>
+    <td th:text="${e.checkOutTime}"></td>
+</tr>
+</table>
+
+</body>
+</html>

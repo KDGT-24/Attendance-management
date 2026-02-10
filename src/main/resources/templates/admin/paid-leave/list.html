@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>有給申請一覧（管理者）</title></head>
+<body>
+<div th:replace="fragments/header :: body"></div>
+
+<h1>有給申請（管理者）</h1>
+
+<table border="1">
+<tr>
+    <th>申請者</th>
+    <th>期間</th>
+    <th>状態</th>
+    <th>操作</th>
+</tr>
+
+<tr th:each="a : ${applications}">
+    <td th:text="${a.applicant.name}"></td>
+
+    <td>
+        <span th:text="${a.startDate}"></span>
+        〜
+        <span th:text="${a.endDate}"></span>
+    </td>
+
+    <td th:text="${a.status.label}"></td>
+
+    <td th:if="${a.status == T(com.example.attendance_management_app.entity.ApplicationStatus).PENDING}">
+        <form th:action="@{/admin/paid-leave/approve/{id}(id=${a.id})}" method="post">
+            <button>承認</button>
+        </form>
+        <form th:action="@{/admin/paid-leave/reject/{id}(id=${a.id})}" method="post">
+            <button>却下</button>
+        </form>
+    </td>
+</tr>
+</table>
+
+</body>
+</html>

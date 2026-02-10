@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:replace="fragments/header :: body"></div>
+
+<h1>職能給マスタ</h1>
+
+<form method="post">
+    名称 <input name="name" required>
+    金額 <input type="number" name="salary" required>
+    <button>追加</button>
+</form>
+
+<table border="1">
+<tr>
+    <th>ID</th><th>名称</th><th>金額</th>
+</tr>
+<tr th:each="j : ${skills}">
+<form method="post" th:action="@{/admin/salary/skills/{id}/update(id=${j.id})}">
+    <td th:text="${j.id}"></td>
+    <td><input name="name" th:value="${j.name}"></td>
+    <td><input type="number" name="salary" th:value="${j.skillSalary}"></td>
+    <td>
+        <button>更新</button>
+    </td>
+</form>
+<form method="post" th:action="@{/admin/salary/skills/{id}/delete(id=${j.id})}">
+    <td><button>削除</button></td>
+</form>
+</tr>
+
+</table>
+
+</body>
+</html>

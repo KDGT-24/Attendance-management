@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:replace="fragments/header :: body"></div>
+
+<h1>ユーザー一覧</h1>
+
+<form method="get">
+    <input name="keyword" placeholder="ユーザー名検索"
+           th:value="${keyword}">
+    <button>検索</button>
+</form>
+
+<table border="1">
+<tr>
+    <th>ID</th>
+    <th>ユーザー名</th>
+    <th>権限</th>
+    <th>操作</th>
+</tr>
+
+<tr th:each="u : ${users}">
+    <td th:text="${u.id}"></td>
+    <td th:text="${u.name}"></td>
+    <td th:text="${u.role}"></td>
+    <td>
+        <a th:href="@{/admin/users/{id}/edit(id=${u.id})}">
+            編集
+        </a>
+    </td>
+</tr>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>有給申請一覧</title></head>
+<body>
+<div th:replace="fragments/header :: body"></div>
+
+<h1>有給申請一覧</h1>
+
+<table border="1">
+<thead>
+<tr>
+    <th>開始日</th>
+    <th>終了日</th>
+    <th>理由</th>
+    <th>状態</th>
+</tr>
+</thead>
+
+<tbody>
+<tr th:each="a : ${applications}">
+    <td th:text="${a.startDate}"></td>
+    <td th:text="${a.endDate}"></td>
+    <td th:text="${a.reason}"></td>
+    <td th:text="${a.status.label}"></td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

@@ -1,4 +1,4 @@
-package com.example.Attendance_management_app.dto;
+package com.example.attendance_management_app.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

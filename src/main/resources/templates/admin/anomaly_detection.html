@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>異常検知</title></head>
+<body>
+<div th:replace="fragments/header :: body"></div>
+
+<h1>異常検知結果</h1>
+<ul>
+    <li th:each="a : ${anomalies}" th:text="${a}"></li>
+</ul>
+
+</body>
+</html>

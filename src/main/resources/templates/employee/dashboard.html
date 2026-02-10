@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>従業員ダッシュボード</title>
+</head>
+<body>
+<div th:replace="fragments/header :: body"></div>
+
+<h1>従業員ダッシュボード</h1>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<form th:action="@{/employee/attendance/punch}" method="post">
+
+    <!-- 出勤 -->
+    <button
+        th:if="${attendance == null or attendance.checkInTime == null}"
+        name="type"
+        value="CHECKIN">
+        出勤
+    </button>
+
+    <!-- 休憩開始 -->
+    <button
+        th:if="${attendance != null
+            and attendance.checkInTime != null
+            and attendance.breakStartTime == null}"
+        name="type"
+        value="BREAK_START">
+        休憩開始
+    </button>
+
+    <!-- 休憩終了 -->
+    <button
+        th:if="${attendance != null
+            and attendance.breakStartTime != null
+            and attendance.breakEndTime == null}"
+        name="type"
+        value="BREAK_END">
+        休憩終了
+    </button>
+
+    <!-- 退勤 -->
+    <button
+        th:if="${attendance != null
+            and attendance.checkInTime != null
+            and attendance.checkOutTime == null
+            and (attendance.breakStartTime == null
+                 or attendance.breakEndTime != null)}"
+        name="type"
+        value="CHECKOUT">
+        退勤
+    </button>
+
+</form>
+
+
+
+<hr>
+
+<a th:href="@{/employee/attendance/history}">勤怠履歴</a> |
+<a th:href="@{/employee/paid-leave/list}">有給一覧</a>
+
+</body>
+</html>

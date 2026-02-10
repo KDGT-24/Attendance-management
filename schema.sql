@@ -24,16 +24,6 @@ CREATE TABLE users (
     skills INT[]                   -- 職能ID配列
 );
 
-------------------------------------------------
--- attendance（イベント方式）
-------------------------------------------------
-CREATE TABLE attendance_events (
-    id SERIAL PRIMARY KEY,
-    user_id INT NOT NULL REFERENCES users(id),
-    event_type INT NOT NULL,
-    event_time TIMESTAMP NOT NULL
-);
-
 
 CREATE TABLE attendance (
     id SERIAL PRIMARY KEY,

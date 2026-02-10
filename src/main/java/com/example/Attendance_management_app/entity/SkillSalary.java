@@ -1,4 +1,4 @@
-package com.example.Attendance_management_app.entity;
+package com.example.attendance_management_app.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:replace="fragments/header :: body"></div>
+
+<form th:action="@{/employee/attendance/history/{id}/request-fix(id=${attendance.id})}"
+      method="post">
+
+    <label>修正対象</label>
+    <select name="eventType">
+        <option value="CHECK_IN">出勤</option>
+        <option value="CHECK_OUT">退勤</option>
+        <option value="BREAK_START">休憩開始</option>
+        <option value="BREAK_END">休憩終了</option>
+    </select>
+
+    <label>修正後時刻</label>
+    <input type="datetime-local" name="newTime" required>
+
+    <label>理由</label>
+    <textarea name="reason" required></textarea>
+
+    <button type="submit">申請</button>
+</form>
+</body>
+</html>

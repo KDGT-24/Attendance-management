@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:replace="fragments/header :: body"></div>
+
+<h2 th:text="${month} + ' の給与'"></h2>
+
+<p>総労働時間: <span th:text="${result.totalMinutes}"></span> 分</p>
+<p>残業: <span th:text="${result.overtimeMinutes}"></span> 分</p>
+<p>深夜: <span th:text="${result.nightMinutes}"></span> 分</p>
+<p>支給額: <span th:text="${result.totalSalary}"></span> 円</p>
+
+</body>
+</html>
