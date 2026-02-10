@@ -19,8 +19,8 @@
 </tr>
 <tr th:each="e : ${events}">
     <td th:text="${#temporals.format(e.checkInTime,'yyyy-MM-dd')}"></td>
-    <td th:text="${e.checkInTime}"></td>
-    <td th:text="${e.checkOutTime}"></td>
+    <td th:text="${#temporals.format(e.checkInTime, 'HH:mm')}"></td>
+    <td th:text="${#temporals.format(e.checkOutTime, 'HH:mm')}"></td>
 </tr>
 </table>
 

@@ -12,8 +12,8 @@
 </tr>
 <tr th:each="a : ${attendanceRecords}">
     <td th:text="${#temporals.format(a.checkInTime,'yyyy-MM-dd')}"></td>
-    <td th:text="${a.checkInTime}"></td>
-    <td th:text="${a.checkOutTime}"></td>
+    <td th:text="${#temporals.format(a.checkInTime, 'HH:mm')}"></td>
+    <td th:text="${#temporals.format(a.checkOutTime, 'HH:mm')}"></td>
     <td>
         <a th:href="@{/employee/attendance/history/{id}/request-fix(id=${a.id})}">修正申請</a>
     </td>

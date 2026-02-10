@@ -24,8 +24,8 @@
 <tr th:each="a : ${allAttendanceRecords}">
     <td th:text="${a.id}"></td>
     <td th:text="${a.user.name}"></td>
-    <td th:text="${a.checkInTime}"></td>
-    <td th:text="${a.checkOutTime}"></td>
+    <td th:text="${#temporals.format(a.checkInTime, 'HH:mm')}"></td>
+    <td th:text="${#temporals.format(a.checkOutTime, 'HH:mm')}"></td>
 </tr>
 </table>
 
